@@ -1,8 +1,10 @@
 export default {
-  primary: "#faf9f7",
-  accent: "#FFC107",
-  homeback: "#f5f5f5",
-  btnbgcolor: "#1b558c",
-  secondary: "#1b558c"
+  primary: "#ffffff",
+  homeback: "#ffffff",
+  accent: "#fff5e9",
+  btnbgcolor: "#b46600",
+  secondary: "#b46600",
+  border:"#c09660",
+  textColor:"#000000"
 };
 

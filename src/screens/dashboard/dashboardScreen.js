@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 function IconWithBadge({ name, badgeCount, color, size }) {
   return (
@@ -59,6 +60,7 @@ function ProfileScreen() {
 }
 
 const Tab = createBottomTabNavigator();
+
 
 export default function DashboardScreen() {
                  return (

@@ -11,9 +11,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.gif",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.gif",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

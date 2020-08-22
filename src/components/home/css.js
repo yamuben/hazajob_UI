@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import color from '../../constants/colors'
+import { BorderlessButton } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   container: {
       padding:20,
@@ -11,34 +12,33 @@ const styles = StyleSheet.create({
   },
   input:{
       paddingLeft:20,
-      borderRadius:50,
-      height: 40,
-      fontSize:25,
+      borderRadius:10,
+      height: 35,
+      fontSize:15,
       backgroundColor:'white',
       borderWidth:1,
       marginBottom: 20,
-      color:'#34495e'
+      color:color.textColor,
+      borderColor:color.border
        
   },
-  inputlocal: {
-    paddingLeft: 20,
-    height: 35,
-    fontSize: 25,
-    backgroundColor: 'white',
-    marginBottom: 15,
-    color: '#34495e',
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
-    borderRadius:20
-
+  inputDrop:{
+      paddingLeft:20,
+      borderRadius:10,
+      fontSize:15,
+      backgroundColor:'white',
+      borderWidth:1,
+      color:color.textColor,
+      borderColor:color.border
+       
   },
+
+
     buttonContainer:{
         height:50,
         marginTop:20,
         marginBottom:20,
-        borderRadius:50,
+        borderRadius:20,
         backgroundColor:color.btnbgcolor,
         paddingVertical:10,
         justifyContent:'center',
@@ -53,11 +53,13 @@ const styles = StyleSheet.create({
     fontSize:40,
     color:color.secondary,
     marginBottom:10,
+    fontWeight:"bold"
+    
     
   },
   welcometext: {
     fontSize: 20,
-    color: color.secondary,
+    color: color.textColor,
     textAlign:"center"
   },
   card: {

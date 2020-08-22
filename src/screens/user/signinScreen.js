@@ -45,7 +45,7 @@ const LoginScreen =  ({navigation}) => {
     }
     return (
             <View style={styles.container}>
-                <Ionicons name="md-checkmark-circle" size={32} color="green" />
+                {/* <Ionicons name="md-checkmark-circle" size={32} color="green" /> */}
                 <View style={styles.textFields}>
                     <View>
 

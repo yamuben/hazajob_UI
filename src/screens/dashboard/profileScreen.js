@@ -10,12 +10,6 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { Dashboard } from '../../navigation/dashboardNavigation';
 
-
-
-
-
-
-
 const profileScreen = ({ navigation }) => {
 
     return (
@@ -23,5 +17,9 @@ const profileScreen = ({ navigation }) => {
             <Text>welcome profileScreen!</Text>
         </View>
     );
-}
+};
+profileScreen.navigationOptions = {
+    headerTitle: 'Profile',
+};
+
 export default profileScreen;

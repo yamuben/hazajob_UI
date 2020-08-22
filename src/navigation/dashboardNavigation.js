@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import mycolor from '../constants/colors';
 import homeScreen from '../screens/dashboard/homeScreen';
 import findScreen from '../screens/dashboard/findScreen';
@@ -53,10 +54,15 @@ function InboxIconWithBadge(props) {
 
 
 const Tab = createBottomTabNavigator();
+// const TabTop = createMaterialTopTabNavigator();
 
 export default function DashboardScreen() {
     return (
         <NavigationContainer independent="true">
+            {/* <TabTop.Navigator>
+                <TabTop.Screen name="Homex" component={} />
+                <TabTop.Screen name="Searchx" component={} />
+            </TabTop.Navigator> */}
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
