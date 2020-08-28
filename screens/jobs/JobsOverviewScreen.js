@@ -46,7 +46,7 @@ JobsOverviewScreen.navigationOptions =navData => {
   return {
   headerTitle: 'All Jobs ',
   headerRight: (<HeaderButtons HeaderButtonComponent={HeaderButton}>
-    <Item title='Cart' iconName={Platform.OS==='android'?'md-cart':'ios-cart'}
+    <Item title='profile' iconName={Platform.OS==='android'?'md-person':'ios-person'}
       onPress={()=>{ }}
     />
   </HeaderButtons>)};

@@ -31,6 +31,7 @@ const JobItem = props => {
             <View style={styles.details}>
             <Button color={Colors.primary}
                    title={props.jobPostedBy}
+                   fontFamily='open-sans-bold'
                 // onPress={}
               />
               <Text style={styles.subtitle}> {props.jobTitle}</Text>
@@ -43,12 +44,12 @@ const JobItem = props => {
             {/* <Ionicons name="md-checkmark-circle" size={32} color="green" /> */}
               <Text style={styles.Date}> {props.jobPostedOn}</Text>
               <Text style={styles.price}> {props.jobAppNoOutof} / {props.jobApplicantsNo}</Text>
-              <Text style={styles.price}> {props.jobTitle}</Text>
-              <Text style={styles.price}> {props.jobTitle}</Text>
+              {/* <Text style={styles.price}> {props.jobTitle}</Text>
+              <Text style={styles.price}> {props.jobTitle}</Text> */}
             <Button color={Colors.primary}
                    title='Apply'
                    fontFamily='open-sans-bold'
-                // onPress={}
+                onPress={props.onViewDetail}
               />
 
             </View>
@@ -61,11 +62,11 @@ const JobItem = props => {
 
 const styles = StyleSheet.create({
   jobview: {
-    shadowColor: 'black',
-    shadowOpacity: 0.26,
+    shadowColor: '#888',
+    shadowOpacity: 0.16,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 0,
-    elevation: 5,
+    elevation: 2,
     backgroundColor: 'white',
     height: 140,
     margin: 2,
@@ -124,6 +125,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     // color: ''
   },
+  besidecontainer:{
+    alignItems:'flex-start',
+    marginTop:15
+  }
 
 //   actions: {
 //     flexDirection: 'row',
