@@ -1,6 +1,6 @@
 import { SearchBar } from 'react-native-elements';
 
-export default class App extends React.Component {
+export default const Mysearch =()=> {
   state = {
     search: '',
   };
@@ -10,7 +10,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { search } = this.state;
+    const { search } = this.state;};
 
     return (
       <SearchBar
@@ -19,5 +19,5 @@ export default class App extends React.Component {
         value={search}
       />
     );
-  }
+  
 }

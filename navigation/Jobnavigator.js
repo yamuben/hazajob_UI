@@ -8,7 +8,7 @@ import JobDetailScreen from '../screens/jobs/JobDetailScreen';
 import startupScreen from '../screens/user/startupScreen';
 import Colors from '../constants/Colors';
 import {Ionicons} from '@expo/vector-icons';
-import findScreen from '../screens/jobs/findScreen';
+import UserOverviewScreen from '../screens/jobs/findUser';
 import chatScreen from '../screens/jobs/chatScreen';
 import notificationScreen from '../screens/jobs/notificationScreen';
 import newpostScreen from '../screens/jobs/newpostScreen';
@@ -36,6 +36,29 @@ const JobsNavigator = createStackNavigator(
     }
   }
 );
+const FindNavigator = createStackNavigator(
+  {
+    // startup: startupScreen,
+    UsersOverview: UserOverviewScreen,
+    // UserDetail: JobDetailScreen,
+ 
+  },
+  {
+    
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? Colors.primary : ''
+      },
+      headerTitleStyle: {
+        fontFamily: 'open-sans-bold'
+      },
+      headerBackTitleStyle: {
+        fontFamily: 'open-sans'
+      },
+      headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary
+    }
+  }
+);
 
 
 const JobTabNavigator = createBottomTabNavigator({
@@ -45,9 +68,9 @@ const JobTabNavigator = createBottomTabNavigator({
       return <Ionicons name='ios-home' size={24} color={tabInfo.tintColor}/>;
     }}},
 
-  FindScreen:{screen:findScreen, navigationOptions:{
+  FindScreen:{screen:FindNavigator, navigationOptions:{
     
-    tabBarLabel:'Find Job',
+    tabBarLabel:'Find User',
     tabBarIcon:(tabInfo)=>{
       return <Ionicons name='ios-search' size={24} color={tabInfo.tintColor}/>;
     }
