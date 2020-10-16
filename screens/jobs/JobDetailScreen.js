@@ -10,6 +10,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 
 import Colors from '../../constants/Colors';
+import Card from '../../components/ui/Card';
 import { FlatList } from 'react-native-gesture-handler';
 
 const JobDetailScreen = props => {
@@ -35,8 +36,9 @@ const JobDetailScreen = props => {
 
       <View style={styles.postcard}>
 
-
-        <View >
+<View style={styles.appForm}>
+<Card style={styles.Applicationform}>
+<View >
           <Text style={styles.headtext}> Make Application</Text>
         </View>
         <View style={styles.jobdetailcard}>
@@ -97,6 +99,9 @@ const JobDetailScreen = props => {
               <Text style={styles.jobtitlemodel}>On:  </Text>
   <Text style={styles.jobtitleresult}>{selectedJob.jobPostedOn}</Text>
         </View>
+</Card>
+
+</View>
 
 
 <View style={styles.jobaction}>
@@ -152,6 +157,11 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius:100
   },
+Applicationform:{
+  width: '90%',
+  padding: 10
+},
+
   posterheader:{
     padding:0,
     width:'100%',
@@ -175,6 +185,13 @@ const styles = StyleSheet.create({
     marginLeft:5,
     fontFamily:'open-sans',
     
+  },
+  appForm:{
+    width:'100%',
+    
+    justifyContent: 'center',
+    alignItems: 'center'
+
   },
 
   postcard:{

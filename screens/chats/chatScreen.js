@@ -12,13 +12,13 @@ import {
   import {HeaderButtons,Item} from 'react-navigation-header-buttons';
   import { SearchBar } from 'react-native-elements';
   import filter from 'lodash.filter';
+import UserItem from '../../components/user/useritem';
+const API_ENDPOINT = `https://hazajob.herokuapp.com/api/v1/users`;
+import userDetailScreen from '../user/userDetailScreen';
 
-const API_ENDPOINT = `https://randomuser.me/api/?seed=1&page=1&results=20`;
 
 
-
-
-const  UserOverviewScreen = props => {
+const  ChatScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
@@ -32,8 +32,8 @@ const [fullData, setFullData] = useState([]);
         fetch(API_ENDPOINT)
           .then(response => response.json())
           .then(response => {
-            setData(response.results);
-            setFullData(response.results);
+            setData(response.data.users);
+            setFullData(response.data.users);
             setIsLoading(false);
           })
           .catch(err => {
@@ -67,7 +67,7 @@ const [fullData, setFullData] = useState([]);
 
 
        
-                 <SearchBar style={styles.sear}
+                 <SearchBar 
           round
           searchIcon={{ size: 24 }}
           
@@ -79,24 +79,33 @@ const [fullData, setFullData] = useState([]);
           placeholder="Search...."
           
         />
-        <View style={styles.container}>
+        <View >
 
           <FlatList
             data={data}
-            keyExtractor={item => item.first}
+            keyExtractor={item => item._id}
             renderItem={({ item }) => (
-              <View style={styles.listItem}>
-                <Image
-                  source={{ uri: item.picture.thumbnail }}
-                  style={styles.coverImage}
-                />
-                <View style={styles.metaInfo}>
-                  <Text style={styles.title}>{`${item.name.first} ${
-                    item.name.last
-                  }`}</Text>
-                  <Text> {`${item.email}`}</Text>
-                </View>
-              </View>
+
+              <UserItem 
+              
+              profilePicture={item.profilePicture}
+              lastName={item.lastName}
+              firstName={item.firstName}
+              motor={item.motor}
+              country={item.location.country}
+              province={item.location.province}
+              district={item.location.district}
+
+              onViewDetail={() => {
+                props.navigation.navigate('UserChatDetail', {
+                  userId: item._id,
+                  data  
+                });
+              }}
+              />
+
+
+      
             )}
           />
         </View>
@@ -147,24 +156,19 @@ const [fullData, setFullData] = useState([]);
 
 
       function handleSearch  (text)  {
-        //   setData([]);
-        //   console.log('***********************');
         const formattedQuery = text.toLowerCase();
         const filteredData = filter(fullData, user => {
-            // setData([]);
-            return contains(user, formattedQuery);
+        return contains(user, formattedQuery);
 
         });
         setData(filteredData);
         
         setQuery(text);
-        // console.log(formattedQuery);
-        // console.log(filteredData);
       };
-      function contains  ({ name, email }, query)  {
-        const { first, last } = name;
+      function contains  ({ firstName,lastName, phone }, query)  {
+        // const { firstName, lastName } = name;
       
-        if (first.includes(query) || last.includes(query) || email.includes(query)) {
+        if (firstName.includes(query) || lastName.includes(query) || phone.includes(query)) {
           return true;
         }
       
@@ -172,50 +176,14 @@ const [fullData, setFullData] = useState([]);
       };
 
   }
-  export default UserOverviewScreen;
+  export default ChatScreen;
 
 
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#f8f8f8',
-      alignItems: 'center'
-    },
-    sear:{
-        width:'100%'
-    },
-    text: {
-      fontSize: 20,
-      color: '#101010',
-      marginTop: 60,
-      fontWeight: '700'
-    },
-    listItem: {
-      marginTop: 10,
-      paddingVertical: 20,
-      paddingHorizontal: 20,
-      backgroundColor: '#fff',
-      flexDirection: 'row'
-    },
-    coverImage: {
-      width: 100,
-      height: 100,
-      borderRadius: 8
-    },
-    metaInfo: {
-      marginLeft: 10
-    },
-    title: {
-      fontSize: 18,
-      width: 200,
-      padding: 10
-    }
-  });
 
-  UserOverviewScreen.navigationOptions =navData => {
+  ChatScreen.navigationOptions =navData => {
     return {
-    headerTitle: 'All users ',
+    headerTitle: 'Chats',
     headerRight: (<HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item title='profile' iconName={Platform.OS==='android'?'md-person':'ios-person'}
         onPress={()=>{ }}

@@ -6,6 +6,7 @@ import {
     TextInput,
     TouchableOpacity
 } from "react-native";
+import userProfileScreen from "./userViewProfileScreen";
 
 
 
@@ -13,12 +14,12 @@ import {
 
 
 
-const  chatScreen = props => {
+const userUpdateProfileScreen = props => {
 
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>welcome chatScreen!</Text>
+            <Text>welcome to user Update Profile Screen!</Text>
         </View>
     );
 }
-export default chatScreen;
+export default userProfileScreen;

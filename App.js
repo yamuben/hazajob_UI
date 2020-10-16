@@ -2,20 +2,27 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
-import { combineReducers,createStore } from 'redux';
+import { combineReducers,createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 
+import ReduxThunk from 'redux-thunk';
+
 import JobTabNavigator from './navigation/Jobnavigator';
 import JobReducer from './store/reducers/Job';
+import authReducer from './store/reducers/auth';
+
+
+
 
 
 const rootReducer = combineReducers({
   jobs:JobReducer,
+  auth: authReducer,
 
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer,applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => {
   return Font.loadAsync({

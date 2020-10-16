@@ -1,23 +1,30 @@
 import React from 'react';
-import { FlatList , Platform, View,TextInput,StyleSheet} from 'react-native';
+import { FlatList , Platform, View,TextInput,StyleSheet, Button} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {HeaderButtons,Item} from 'react-navigation-header-buttons';
 import { SearchBar } from 'react-native-elements';
 import JobItem from '../../components/Job/JobItem';
 import HeaderButton from '../../components/ui/HeadderButton';
-import SearchBox from '../../components/ui/searchComponent';
+// import SearchBox from '../../components/ui/searchComponent';
 import { ScrollView } from 'react-native-gesture-handler';
+import * as authActions from '../../store/actions/auth';
+import Colors from '../../constants/Colors';
 
 const JobsOverviewScreen = props => {
   const jobs = useSelector(state => state.jobs.availableJobs);
   const dispatch = useDispatch();
+  const userToken = useSelector(state=> state.auth.token);
 
+  console.log(".........."+userToken);
   return (
-  <ScrollView>
 
-    {/* <SearchBox/> */}
+<ScrollView>
+<Button title="logout" color={Colors.primary} onPress={()=>{
 
 
+dispatch(authActions.logout());
+props.navigation.navigate('startup');
+}}/>
     <SearchBar
           round
           searchIcon={{ size: 24 }}
@@ -47,13 +54,11 @@ const JobsOverviewScreen = props => {
 
 
           onViewDetail={() => {
-            props.navigation.navigate('JobDetail', {
+              props.navigation.navigate('JobDetail', { 
               jobId: itemData.item.id,
-              postedBy: itemData.item.jobPostedBy
-            });
-          }}
+              postedBy: itemData.item.jobPostedBy }); }}
           onAddToCart={() => { }}
-        />
+         />
       )}
     />      
   </ScrollView>
@@ -63,11 +68,26 @@ const JobsOverviewScreen = props => {
 };
 
 JobsOverviewScreen.navigationOptions =navData => {
+  // const dispatch = useDispatch();
   return {
-  headerTitle: 'All Jobs ',
+  headerTitle: 'All Jobs ', 
+  // headerLeft: (
+  //   <HeaderButtons HeaderButtonComponent={HeaderButton}>
+  //     <Item
+  //       title="Menu"
+  //       iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+  //       onPress={() => {
+  //         navData.navigation.navigate('Profile');
+  //       }}
+  //     />
+  //   </HeaderButtons>
+  // ),
   headerRight: (<HeaderButtons HeaderButtonComponent={HeaderButton}>
     <Item title='profile' iconName={Platform.OS==='android'?'md-person':'ios-person'}
-      onPress={()=>{ }}
+      onPress={()=>{ 
+        
+        navData.navigation.navigate('Profile');
+      }}
     />
   </HeaderButtons>)};
 };
