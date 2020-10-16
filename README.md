@@ -1,4 +1,4 @@
-# hazajob_UI
+# Haza Jobs 
 
 Hazajobs in Rwanda this project is a popular job app where employers can post jobs for free and Job seekers get it in easy way via Mobile App (Ios or Android). 
 Jobs can be sorted by location (city, town, province) and applicants can use hazajobs to submit their resumes. 
