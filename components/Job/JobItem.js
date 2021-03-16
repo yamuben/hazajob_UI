@@ -23,22 +23,33 @@ const JobItem = props => {
   return (
     <View style={styles.jobview}>
       <View style={styles.touchable}>
-        <TouchableCmp onPress={props.onViewDetail} useForeground>
+
           <View style={styles.mainJobView}>
+            
             <View style={styles.imageContainer}>
-              <Image style={styles.image} source={{ uri: props.jobPostedByPicture }} />
+               <Image style={styles.image} source={{ uri: props.jobPostedByPicture }} />
             </View>
+            
             <View style={styles.details}>
-            <Button color={Colors.primary}
-                   title={props.jobPostedBy}
-                   fontFamily='open-sans-bold'
-                // onPress={}
-              />
-              <Text style={styles.subtitle}> {props.jobTitle}</Text>
-  <Text style={styles.price}> {props.jobProvince} , {props.jobDistrict}</Text>
-              <Text style={styles.price}> {props.jobType}</Text>
-              <Text style={styles.price}> Deadline: {props.jobDeadlineOn}</Text>
-            </View>
+            <TouchableCmp onPress={()=>{}} useForeground>
+              <View style={styles.detailsProfile} >
+              <Text style={styles.postedBy} > {props.jobPostedBy}</Text>
+              </View>
+          </TouchableCmp>
+              
+        <TouchableCmp onPress={props.onViewDetail} useForeground>
+<View>
+<Text style={styles.subtitle}> {props.jobTitle}</Text>
+
+              
+<Text style={styles.price}> {props.jobProvince} , {props.jobDistrict}</Text>
+            <Text style={styles.price}> {props.jobType}</Text>
+            <Text style={styles.price}> Deadline: {props.jobDeadlineOn}</Text>
+
+</View>
+
+</TouchableCmp>
+           </View>
             <View style={styles.besidecontainer}>
 
             {/* <Ionicons name="md-checkmark-circle" size={32} color="green" /> */}
@@ -54,7 +65,6 @@ const JobItem = props => {
 
             </View>
           </View>
-        </TouchableCmp>
       </View>
     </View>
   );
@@ -68,7 +78,7 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 2,
     backgroundColor: 'white',
-    height: 140,
+    height: 120,
     margin: 2,
     width: '99%'
   },
@@ -79,12 +89,12 @@ const styles = StyleSheet.create({
       width:'100%',
       height:'100%',
       flexDirection:'row',
-    //   backgroundColor:'blue'
+      // backgroundColor:'blue'
   },
   imageContainer: {
       marginTop:10,
     margin:5,
-    width: '15%',
+    width: '12%',
     height: '40%',
     borderRadius:100,
     overflow: 'hidden'
@@ -96,10 +106,19 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: 'flex-start',
-    height: '100%',
-    padding:2,
+    height: '95%',
+    padding:0,
     // backgroundColor:'red',
     width:'60%'
+
+
+
+  },
+  detailsProfile: {
+    alignItems: 'flex-start',
+  width:'102%',
+    // backgroundColor:'yellow',
+    
 
 
 
@@ -114,6 +133,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginVertical: 0
   },
+  postedBy: {
+    fontFamily: 'open-sans-bold',
+    fontSize: 18,
+    marginVertical: 0,
+    color:Colors.primary },
   price: {
     fontFamily: 'open-sans',
     fontSize: 14,

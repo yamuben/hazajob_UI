@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     Text,
+    Alert,
     View,
     FlatList,
     ActivityIndicator,
@@ -38,9 +39,13 @@ const [fullData, setFullData] = useState([]);
           })
           .catch(err => {
             setIsLoading(false);
-            setError(err);
+            setError('err');
           });
-      }, []);
+          if(error){
+            Alert.alert(' Error Occured ','failed', [{text:'Ok'}]);
+          }
+
+      }, [error]);
 
       if (isLoading) {
         return (
@@ -49,16 +54,17 @@ const [fullData, setFullData] = useState([]);
           </View>
         );
       }
-    
-      if (error) {
-        return (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 18}}>
-              Error fetching data... Check your network connection!
-            </Text>
-          </View>
-        );
-      }
+
+
+      // if (error) {
+      //   return (
+      //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      //       <Text style={{ fontSize: 18}}>
+      //         Error fetching data... Check your network connection!
+      //       </Text>
+      //     </View>
+      //   );
+      // }
 // console.log(data);
 // console.log('@@@@@@@@@@@');
 // console.log(fullData);

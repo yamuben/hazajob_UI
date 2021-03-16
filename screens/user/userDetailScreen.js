@@ -31,7 +31,8 @@ const userDetailScreen = (props) => {
       keyboardVerticalOffset={50}
       style={styles.screen}
     >
-    <LinearGradient colors={['#A56400', '#ffc370']} style={styles.gradient}>
+    {/* <LinearGradient colors={['#A56400', '#ffc370']} style={styles.gradient}> */}
+    <LinearGradient colors={['#fff4e6', '#fbfbff']} style={styles.gradient}>
       <Card style={styles.authContainer}>
         <ScrollView>
 
@@ -72,7 +73,7 @@ const userDetailScreen = (props) => {
           title="Posts"
         //   onPress={() => {
         //     dispatch(cartActions.addToCart(selectedProduct));
-        //   }}
+        //   }}1603548234    1603546581
         />  
     </View>
         </View>

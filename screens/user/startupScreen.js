@@ -92,7 +92,7 @@ const [isSignup, setIsSignup] = useState(false);
   setIsLoading(true);
   try{
     await dispatch(action);
-  
+    
     props.navigation.navigate('account');
   }
     catch(err){

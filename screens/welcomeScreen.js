@@ -8,7 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import Colors from '../constants/Colors';
-
+import * as userProfile from '../store/actions/profile';
 
 const WelcomeScreen = props =>{
 
@@ -22,16 +22,22 @@ const WelcomeScreen = props =>{
           return;
         }
         const transformedData = JSON.parse(userData);
-        const { token, userId } = transformedData;
+        const { token, userId, expiryDate } = transformedData;
         // const expirationDate = new Date(expiryDate);
+
+        
   
-        if ( !token || !userId) {
+        if ( !token || !userId || new Date(parseInt(expiryDate)*1000)< new Date()) {
           props.navigation.navigate('startup');
           return;
         }
-  
+  console.log('Exp date: ' +new Date(parseInt(expiryDate)*1000));
+  console.log('to Day: ' + new Date());
+
+  // userProfile.getUserProfile(token);
+  dispatch(userProfile.getUserProfile(token))
         props.navigation.navigate('account');
-        dispatch(authActions.authenticate(userId, token));
+        dispatch(authActions.authenticate(userId, token, expiryDate));
       };
   
       tryLogin();

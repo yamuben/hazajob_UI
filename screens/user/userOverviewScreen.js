@@ -5,8 +5,8 @@ import {
     View,
     FlatList,
     ActivityIndicator,
-    Image,ScrollView,
-    TextInput,Platform 
+    Alert,ScrollView,
+    TextInput,Platform, RefreshControl 
   } from 'react-native';
   import HeaderButton from '../../components/ui/HeadderButton';
   import {HeaderButtons,Item} from 'react-navigation-header-buttons';
@@ -30,45 +30,63 @@ const  UserOverviewScreen = props => {
   const [query, setQuery] = useState('');
 const [fullData, setFullData] = useState([]);
 
-// console.log(userToken);
-    useEffect(() => {
-        setIsLoading(true);
+
+async function fetchData(){
+  
+  setIsLoading(true);
+        
+  const response = await fetch(API_ENDPOINT,{
+  method:'GET',
+  headers:{
+      'Content-Type':'application/json',
+      'x_auth_token':userToken
+  }});
+
+
+  const resData = await response.json();
+  console.log('status:'+resData.status);
+
+  if(resData.status==='error'){
+
+    let errorMessage ='something went wrong';
+    if(resData.message!=''){
+    errorMessage=resData.message;}
+    setIsLoading(false);
+    setError(errorMessage);
+    // console.log('errorMessage')
+  }else{
+
+    // console.log('kkkkkkkkkk')
+    setData(resData.data.users);
+    setFullData(resData.data.users);
+    setIsLoading(false);
+  }      
+};
+
+    useEffect(() => {  
     
-        fetch(API_ENDPOINT,{
-          method:'GET',
-          headers:{
-              'Content-Type':'application/json',
-              'x_auth_token':userToken
-          }})
-          .then(response => response.json())
-          .then(response => {
-            setData(response.data.users);
-            setFullData(response.data.users);
-            setIsLoading(false);
-          })
-          .catch(err => {
-            setIsLoading(false);
-            setError(err);
-          });
-      }, []);
+
+      fetchData();
+
+
+          if(error){
+            Alert.alert(' Error Occured ',error, [{text:'Ok'}]);
+          }
+      }, [error]);
 
       if (isLoading) {
         return (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" color="#5500dc" />
+            <ActivityIndicator size="small" color="#5500dc" />
           </View>
         );
       }
     
-      if (error) {
-        return (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 18}}>
-              Error fetching data... Check your network connection!
-            </Text>
-          </View>
-        );
-      }
+    
+     function refresh(){
+      setIsLoading(true);
+      Alert.alert(' Error Occured ','refreshed', [{text:'Ok'}]);
+     }
 // console.log(data);
 // console.log('@@@@@@@@@@@');
 // console.log(token.dataFromToken(userToken));
@@ -94,6 +112,13 @@ const [fullData, setFullData] = useState([]);
           <FlatList
             data={data}
             keyExtractor={item => item.id}
+            refreshControl={
+              <RefreshControl 
+              refreshing={isLoading}
+              onRefresh={refresh}
+              />
+            }
+            
             renderItem={({ item }) => (
 
               <UserItem 
@@ -194,9 +219,11 @@ const [fullData, setFullData] = useState([]);
   UserOverviewScreen.navigationOptions =navData => {
     return {
     headerTitle: 'Find users ',
-    headerRight: (<HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item title='profile' iconName={Platform.OS==='android'?'md-person':'ios-person'}
-        onPress={()=>{ }}
-      />
-    </HeaderButtons>)};
+    // headerRight: (<HeaderButtons HeaderButtonComponent={HeaderButton}>
+    //   <Item title='profile' iconName={Platform.OS==='android'?'md-person':'ios-person'}
+    //     onPress={()=>{ }}
+    //   />
+    // </HeaderButtons>)
+    
+  };
   };

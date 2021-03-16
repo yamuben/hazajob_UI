@@ -4,7 +4,7 @@ import {
   View,
   Text,
   KeyboardAvoidingView,
-  TextInput,
+  Alert,
   TouchableOpacity,
   ActivityIndicator,
   StyleSheet, Image,
@@ -33,55 +33,64 @@ const  UserOverviewScreen = props => {
     const userId = useSelector(state=> state.auth.userId);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
 const [fullData, setFullData] = useState([]);
-
 const dispatch = useDispatch();
-    useEffect(async() => {
+    useEffect(() => {
         setIsLoading(true);
     
-       await fetch(API_ENDPOINT,{
+        fetch(API_ENDPOINT,{
           method:'GET',
           headers:{
               'Content-Type':'application/json',
               'x_auth_token':userToken
           }})
-          .then(response => response.json())
+          .then(response =>  response.json())
           .then(response => {
-          console.log(response);
-            setData(response.data.user);
-            setFullData(response.data.user);
+
+            
+          console.log('>>>>>>>>>'+response);
+          // me=response.data.user;
+          if(response.status==='error'){
+            setError(response.message);
+            
+          console.log('>>>>>>>>>'+response);
+
+
+          
+        props.navigation.navigate('JobsOverview');
             setIsLoading(false);
+          }else{
+            setData(response.data.user);
+            // setData('hey');
+            setFullData(response.data.user);
+            
+          console.log('<<<<<<<<<<'+response);
+            setIsLoading(false);
+          }
+            
           })
           .catch(err => {
             setIsLoading(false);
             setError(err);
           });
-      }, []);
+
+      }, [Error]);
 
       if (isLoading) {
         return (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" color="#5500dc" />
+            <ActivityIndicator size="small" color="#5500dc" />
           </View>
         );
       }
-    
-      if (error) {
-        return (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 18}}>
-              Error fetching data... Check your network connection!
-            </Text>
-          </View>
-        );
-      }
+     
 
-const selectedUser=  data;
+      Object.keys(data).length ? console.log(data.loginInfos.email) : console.log('no data');
 
-console.log(data.loginInfos);
+      const userData =Object.keys(data).length;
       return (
         
         <KeyboardAvoidingView 
@@ -89,7 +98,7 @@ console.log(data.loginInfos);
         keyboardVerticalOffset={50}
         style={styles.screen}
       >
-      <LinearGradient colors={['#A56400', '#ffc370']} style={styles.gradient}>
+      <LinearGradient colors={['#fff4e6', '#fbfbff']}  style={styles.gradient}>
         <Card style={styles.authContainer}>
           <ScrollView>
   
@@ -106,22 +115,23 @@ console.log(data.loginInfos);
               <Image
                   style={styles.profile}
                   source={{
-                      uri:selectedUser.profilePicture
+                      uri:data.profilePicture
                   }}
               />
           </View>
           <View style={styles.address}>
-              <Text style={styles.addressText}>  {selectedUser.lastName} {selectedUser.firstName}</Text>
-              <Text style={styles.addressTextTitle}> {selectedUser.title} </Text>
-              {/* <Text style={styles.addressTextInside}> {selectedUser.loginInfos.email}</Text> */}
-             {/* <Text style={styles.addressTextInside}> {selectedUser.phone}</Text>
-              <Text style={styles.addressTextInside}> {selectedUser.location.country} , {selectedUser.location.province} , {selectedUser.location.district} , {selectedUser.location.sector} </Text>  */}
+              <Text style={styles.addressText}>  {data.lastName} {data.firstName}</Text>
+              <Text style={styles.addressTextTitle}> {data.title} </Text>
+              
+              <Text style={styles.addressTextInside}> {userData ? data.loginInfos.email : ''}</Text>
+             <Text style={styles.addressTextInside}> {data.phone}</Text>
+              <Text style={styles.addressTextInside}> {userData ? data.location.country : ''} , {userData ? data.location.province : ''} , {userData ? data.location.district : ''} , {userData ? data.location.sector : ''} </Text> 
                   
       <View style={styles.action}>
           <Button
             color={Colors.primary}
-            title="Message"
-            onPress={() => { }}
+            title="Update"
+            onPress={() => {  }}
           /> 
           <Button
             color={Colors.primary}
@@ -136,19 +146,19 @@ console.log(data.loginInfos);
           </View>
           
           <View style={styles.motorView}>
-                  {/* <Text style={styles.motor}> " {selectedUser.motor} " </Text> */}
+                  <Text style={styles.motor}> " {data.motor} " </Text>
               </View>
   
           <View style={styles.allDetails}>
-{/*               
+              
               <Text style={styles.addressTitle}> Skills: </Text>
-              <Text style={styles.addressBody}> {selectedUser.skill.categoryId} </Text>
+              <Text style={styles.addressBody}> {userData ? data.skill.categoryId : ''} </Text>
               
               <Text style={styles.addressTitle}> Description: </Text>
-              <Text style={styles.addressBody}> {selectedUser.description} </Text>
+              <Text style={styles.addressBody}> {data.description} </Text>
               
               <Text style={styles.addressTitle}> Portfolio: </Text>
-              <Text style={styles.addressBody}> {selectedUser.portfolio} </Text> */}
+              <Text style={styles.addressBody}> {data.portfolio} </Text>
               
           </View>
   

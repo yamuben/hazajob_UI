@@ -1,5 +1,5 @@
-import React from 'react';
-import { FlatList , Platform, View,TextInput,StyleSheet, Button} from 'react-native';
+import React,{ useState, useEffect } from 'react';
+import { FlatList , Platform, View,TextInput,StyleSheet,ActivityIndicator, Button} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {HeaderButtons,Item} from 'react-navigation-header-buttons';
 import { SearchBar } from 'react-native-elements';
@@ -15,7 +15,32 @@ const JobsOverviewScreen = props => {
   const dispatch = useDispatch();
   const userToken = useSelector(state=> state.auth.token);
 
-  console.log(".........."+userToken);
+
+
+const [isLoading, setIsLoading] = useState(false);
+  const [error, setError]=useState();
+
+  // console.log(".........."+userToken);
+  useEffect(()=>{
+    if(error){
+      Alert.alert(' Error Occured ',error, [{text:'Ok'}]);
+    }
+  },[error]);
+
+  const profileHandler =()=>{
+let profileAction = userProfile.getUserProfile(userToken);
+  setError(null);
+  setIsLoading(true);
+  try{
+    dispatch(profileAction);
+
+  }catch(err){
+
+    setError(err.message);
+    setIsLoading(false);
+  }
+};
+
   return (
 
 <ScrollView>
@@ -25,6 +50,7 @@ const JobsOverviewScreen = props => {
 dispatch(authActions.logout());
 props.navigation.navigate('startup');
 }}/>
+
     <SearchBar
           round
           searchIcon={{ size: 24 }}
@@ -57,8 +83,7 @@ props.navigation.navigate('startup');
               props.navigation.navigate('JobDetail', { 
               jobId: itemData.item.id,
               postedBy: itemData.item.jobPostedBy }); }}
-          onAddToCart={() => { }}
-         />
+            />
       )}
     />      
   </ScrollView>
@@ -67,8 +92,13 @@ props.navigation.navigate('startup');
   );
 };
 
+export default JobsOverviewScreen;
 JobsOverviewScreen.navigationOptions =navData => {
   // const dispatch = useDispatch();
+
+
+
+
   return {
   headerTitle: 'All Jobs ', 
   // headerLeft: (
@@ -83,16 +113,16 @@ JobsOverviewScreen.navigationOptions =navData => {
   //   </HeaderButtons>
   // ),
   headerRight: (<HeaderButtons HeaderButtonComponent={HeaderButton}>
+    {
+      
     <Item title='profile' iconName={Platform.OS==='android'?'md-person':'ios-person'}
       onPress={()=>{ 
-        
         navData.navigation.navigate('Profile');
       }}
-    />
+    />}
   </HeaderButtons>)};
 };
 
-export default JobsOverviewScreen;
 
 // const styles = StyleSheet.create({
 //   searchView: {
